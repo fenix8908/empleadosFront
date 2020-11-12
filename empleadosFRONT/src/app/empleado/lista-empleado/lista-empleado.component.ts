@@ -1,4 +1,8 @@
+import { EmpleadoService } from './../../servicios/empleado.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Empleado } from 'src/app/modelos/empleado';
+
 
 @Component({
   selector: 'app-lista-empleado',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaEmpleadoComponent implements OnInit {
 
-  constructor() { }
+  empleados:Empleado[] = [];
+  p: number = 1;
+  constructor(private empleadoService:EmpleadoService,toastService:ToastrService) { }
 
   ngOnInit(): void {
+    this.obtenerEmpleados()
+  }
+
+  obtenerEmpleados(){
+    this.empleadoService.listaEmpleadosService().subscribe(
+      respuesta =>{
+        this.empleados = respuesta;
+      }
+    )
   }
 
 }
